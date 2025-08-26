@@ -1,6 +1,3 @@
-// PropertyListTemplate.tsx
-"use client";
-
 import styles from "./styles.module.css";
 import { Property } from "@/models/properties";
 import PropertyCard from "../../atoms/PropertyCard/PropertyCard";

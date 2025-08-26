@@ -1,0 +1,523 @@
+/* styles.module.css */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px 40px;
+}
+
+.loading, .error {
+  text-align: center;
+  padding: 60px 20px;
+  font-size: 1.2rem;
+  color: #717171;
+}
+
+/* Header */
+.header {
+  margin-bottom: 24px;
+  padding-top: 24px;
+}
+
+.title {
+  font-size: 2.2rem;
+  font-weight: 600;
+  color: #222;
+  margin-bottom: 8px;
+  line-height: 1.2;
+}
+
+.subtitleContainer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.propertyType {
+  font-weight: 500;
+  color: #717171;
+}
+
+.location {
+  color: #717171;
+  display: flex;
+  align-items: center;
+}
+
+.location::before {
+  content: "•";
+  margin: 0 8px;
+}
+
+.ratingHeader {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.stars {
+  color: #FF385C;
+  font-size: 1.1rem;
+}
+
+.ratingValue {
+  font-weight: 500;
+}
+
+.reviewsCount {
+  color: #717171;
+  font-size: 0.9rem;
+}
+
+/* Gallery */
+.gallery {
+  margin-bottom: 32px;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+}
+
+.mainImage {
+  position: relative;
+  height: 500px;
+  overflow: hidden;
+}
+
+.galleryImage {
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.navBtn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  cursor: pointer;
+  z-index: 10;
+  transition: background-color 0.2s;
+}
+
+.navBtn:hover {
+  background: rgba(255, 255, 255, 1);
+}
+
+.imageIndicators {
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.indicator.active {
+  background: rgba(255, 255, 255, 1);
+  transform: scale(1.2);
+}
+
+.imageCounter {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+}
+
+.thumbnailContainer {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.thumbnail {
+  position: relative;
+  width: 100px;
+  height: 75px;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+.thumbnail:hover, .activeThumbnail {
+  opacity: 1;
+}
+
+.thumbnailImage {
+  object-fit: cover;
+}
+
+.moreImages {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  height: 75px;
+  border-radius: 8px;
+  background: #f0f0f0;
+  color: #717171;
+  font-weight: 500;
+}
+
+/* Content Layout */
+.content {
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  gap: 40px;
+}
+
+/* Main Content */
+.section {
+  margin-bottom: 32px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #ebebeb;
+}
+
+.section:last-child {
+  border-bottom: none;
+}
+
+.sectionTitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: #222;
+}
+
+.detailsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.detailItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.detailIcon {
+  font-size: 1.5rem;
+  width: 40px;
+  text-align: center;
+}
+
+.detailInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.detailValue {
+  font-weight: 500;
+  margin-bottom: 2px;
+}
+
+.detailLabel {
+  font-size: 0.9rem;
+  color: #717171;
+}
+
+.description {
+  line-height: 1.6;
+  color: #484848;
+}
+
+.amenitiesGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.amenityItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.amenityIcon {
+  color: #FF385C;
+  font-weight: bold;
+}
+
+/* Sidebar */
+.sidebar {
+  position: relative;
+}
+
+.reservationCard {
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 24px;
+}
+
+.price {
+  margin-bottom: 20px;
+}
+
+.priceValue {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.pricePeriod {
+  font-size: 1rem;
+  color: #717171;
+}
+
+.reservationForm {
+  margin-bottom: 20px;
+}
+
+.dateInputs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.inputGroup label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #484848;
+}
+
+.input {
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #000;
+}
+
+.reserveBtn {
+  width: 100%;
+  padding: 14px;
+  background: #FF385C;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-top: 16px;
+}
+
+.reserveBtn:hover {
+  background: #e61e4d;
+}
+
+.pricingSummary {
+  border-top: 1px solid #ebebeb;
+  padding-top: 20px;
+}
+
+.pricingLine {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  color: #484848;
+}
+
+.pricingTotal {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #ebebeb;
+  font-weight: 600;
+}
+
+.hostCard {
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 20px;
+  margin-top: 24px;
+}
+
+.hostHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.hostAvatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: #FF385C;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.hostName {
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.superHostBadge {
+  display: inline-block;
+  background: #FF385C;
+  color: white;
+  font-size: 0.7rem;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.hostSince {
+  color: #717171;
+  font-size: 0.9rem;
+}
+
+/* Modal */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.modal {
+  background: white;
+  border-radius: 12px;
+  padding: 30px;
+  max-width: 500px;
+  width: 100%;
+  position: relative;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.modalClose {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #717171;
+}
+
+.modalTitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: #222;
+}
+
+.modalText {
+  margin-bottom: 24px;
+  line-height: 1.5;
+  color: #484848;
+}
+
+.modalActions {
+  display: flex;
+  gap: 12px;
+}
+
+.modalButton {
+  padding: 12px 20px;
+  background: #FF385C;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  flex: 1;
+}
+
+.modalButtonSecondary {
+  padding: 12px 20px;
+  background: transparent;
+  color: #222;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  flex: 1;
+}
+
+/* Responsividade */
+@media (max-width: 900px) {
+  .content {
+    grid-template-columns: 1fr;
+  }
+  
+  .detailsGrid, .amenitiesGrid {
+    grid-template-columns: 1fr;
+  }
+  
+  .mainImage {
+    height: 350px;
+  }
+}
+
+@media (max-width: 600px) {
+  .container {
+    padding: 0 16px 32px;
+  }
+  
+  .title {
+    font-size: 1.8rem;
+  }
+  
+  .dateInputs {
+    grid-template-columns: 1fr;
+  }
+  
+  .modalActions {
+    flex-direction: column;
+  }
+}

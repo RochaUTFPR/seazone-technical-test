@@ -1,6 +1,6 @@
 export enum WebRoutes {
     HOME = "/",
-    PROPERTY = "/property",
+    PROPERTY = "/Property",
     PROPERTYLIST = "/PropertyList",
 }
 
