@@ -39,7 +39,7 @@ Este projeto é um Teste Técnico web desenvolvido em [Next.js](https://nextjs.o
 - **Linguagem:** TypeScript, para maior segurança e produtividade.
 - **Componentização:** Componentes reutilizáveis em `src/components`, organizados seguindo os princípios do [Atomic Design](https://atomicdesign.bradfrost.com/chapter-2/), para garantir consistência, escalabilidade e fácil manutenção.
 - **Estilização:** CSS Modules para escopo local e fácil manutenção.
-- **Requisições HTTP:** [Axios](https://axios-http.com/) configurado em [`src/service/utils/api.ts`](src/service/utils/api.ts).
+- **Requisições HTTP:** [Axios](https://axios-http.com/) configurado em [`src/service/utils/api.ts`](web-seazone/src/service/utils/api.ts).
 - **Gerenciamento de estado:** Hooks do React (`useState`, `useEffect`, `useCallback`).
 - **Notificações:** [React Toastify](https://fkhadra.github.io/react-toastify/) para feedback ao usuário.
 - **Paginação e filtros:** Implementados na listagem de propriedades.
