@@ -2,6 +2,11 @@
 
 Este projeto é um Teste Técnico web desenvolvido em [Next.js](https://nextjs.org/) para simular a reserva de propriedades.
 
+## Deploy
+
+O sistema foi hospedado na **Vercel** para fácil visualização e testes.  
+🔗 [Acesse aqui](https://seazone-technical-test-732by16mc-pedros-projects-04307471.vercel.app/)
+
 ## Instruções de Instalação
 
 1. **Clone o repositório:**
