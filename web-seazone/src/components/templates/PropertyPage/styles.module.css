@@ -1,6 +1,6 @@
 .container {
   max-width: 1200px;
-  margin: 0 auto;
+  margin: 60px auto;
   padding: 0 20px 40px;
 }
 
@@ -161,7 +161,7 @@
   transition: opacity 0.2s;
 }
 
-.thumbnail:hover, .activeThumbnail {
+.thumbnail:hover, .active {
   opacity: 1;
 }
 
@@ -301,6 +301,7 @@
   display: flex;
   flex-direction: column;
   gap: 6px;
+  margin-top: 10px;
 }
 
 .inputGroup label {
@@ -314,6 +315,7 @@
   border: 1px solid #ddd;
   border-radius: 8px;
   font-size: 1rem;
+  color: #484848;
 }
 
 .input:focus {
@@ -458,28 +460,6 @@
 .modalActions {
   display: flex;
   gap: 12px;
-}
-
-.modalButton {
-  padding: 12px 20px;
-  background: #FF385C;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-weight: 500;
-  cursor: pointer;
-  flex: 1;
-}
-
-.modalButtonSecondary {
-  padding: 12px 20px;
-  background: transparent;
-  color: #222;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  font-weight: 500;
-  cursor: pointer;
-  flex: 1;
 }
 
 @media (max-width: 900px) {

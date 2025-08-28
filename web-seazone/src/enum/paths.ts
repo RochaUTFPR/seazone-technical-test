@@ -6,4 +6,5 @@ export enum WebRoutes {
 
 export enum ApiRoutes {
     PROPERTIES = "/properties",
+    BOOKINGS = "/bookings",
 }

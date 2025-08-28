@@ -2,17 +2,35 @@ import { useState } from "react";
 import Image from "next/image";
 import styles from "./styles.module.css";
 import { Property } from "@/models/properties";
+import Button from "@/components/atoms/Button/Button";
+import { toast } from "react-toastify";
+import { Booking } from "@/models/booking";
+import { ToastText } from "@/enum/ToastText";
 
 type PropertyPageTemplateProps = {
   property: Property;
+  Reservation: (data: any) => Promise<Booking | null>;
 };
 
-export default function PropertyPageTemplate({ property }: PropertyPageTemplateProps) {
+export default function PropertyPageTemplate({ property, Reservation }: PropertyPageTemplateProps) {
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [showReservationModal, setShowReservationModal] = useState(false);
 
-  if (!property) return <div className={styles.error}>Propriedade não encontrada.</div>;
+   const [reservationData, setReservationData] = useState({
+    checkIn: "",
+    checkOut: "",
+    guests: 1,
+    customerName: "",
+    customerEmail: "",
+  });
+
+  const handleChange = (field: string, value: string | number) => {
+    setReservationData((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
 
   const nextImage = () => {
     if (!property.images) return;
@@ -30,10 +48,61 @@ export default function PropertyPageTemplate({ property }: PropertyPageTemplateP
     setCurrentImageIndex(index);
   };
 
-  const handleReservation = () => setShowReservationModal(true);
+  const validateForm = () => {
+    const { checkIn, checkOut, guests, customerName, customerEmail } = reservationData;
+
+    if (!customerName.trim()) {
+      toast.info(ToastText.NAME_REQUIRED);
+      return false;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(customerEmail)) {
+      toast.info(ToastText.EMAIL_REQUIRED);
+      return false;
+    }
+
+    if (!checkIn || !checkOut) {
+      toast.info(ToastText.MANDATORY_ENTRY_AND_EXIT_DATES);
+      return false;
+    }
+
+    if (new Date(checkOut) <= new Date(checkIn)) {
+      toast.info(ToastText.INVALID_DATE_RANGE);
+      return false;
+    }
+
+    if (guests < 1) {
+      toast.info(ToastText.INVALID_GUESTS_NUMBER);
+      return false;
+    }
+
+    return true;
+  };
+
+  const onSubmitReservation = async () => {
+    if (!validateForm()) return;
+
+    const result : Booking | null = await Reservation({
+      propertyId: property.id,
+      ...reservationData,
+    });
+
+    if (result) {
+      setShowReservationModal(true);
+
+      setReservationData({
+        checkIn: "",
+        checkOut: "",
+        guests: 1,
+        customerName: "",
+        customerEmail: "",
+      });
+    }
+  };
+
   const closeModal = () => setShowReservationModal(false);
 
-  // Função para formatar comodidades, Não é uma solução ideal, mas atende para o teste
   const formatAmenity = (amenity: string) => {
     const amenityMap: Record<string, string> = {
       'wifi': 'Wi-Fi',
@@ -65,6 +134,8 @@ export default function PropertyPageTemplate({ property }: PropertyPageTemplateP
       </>
     );
   };
+
+  if (!property) return <div className={styles.error}>Propriedade não encontrada.</div>;
 
   return (
     <div className={styles.container}>
@@ -191,6 +262,7 @@ export default function PropertyPageTemplate({ property }: PropertyPageTemplateP
             <h2 className={styles.sectionTitle}>Descrição</h2>
             <p className={styles.description}>
               {"Esta propriedade incrível oferece uma experiência única para seus hóspedes. Localizada em uma área privilegiada, combina conforto, praticidade e beleza em todos os detalhes."}
+              {/*Somente para simular uma descrição de cada imovel*/}
             </p>
           </section>
 
@@ -210,54 +282,90 @@ export default function PropertyPageTemplate({ property }: PropertyPageTemplateP
         </div>
 
         <div className={styles.sidebar}>
-          <div className={styles.reservationCard}>
-            <div className={styles.price}>
-              <span className={styles.priceValue}>R$ {property.pricePerNight}</span>
-              <span className={styles.pricePeriod}>/noite</span>
-            </div>
-            
-            <div className={styles.reservationForm}>
-              <div className={styles.dateInputs}>
-                <div className={styles.inputGroup}>
-                  <label htmlFor="checkin">Check-in</label>
-                  <input type="date" id="checkin" className={styles.input} />
-                </div>
-                <div className={styles.inputGroup}>
-                  <label htmlFor="checkout">Check-out</label>
-                  <input type="date" id="checkout" className={styles.input} />
-                </div>
-              </div>
-              
+        <div className={styles.reservationCard}>
+          <div className={styles.price}>
+            <span className={styles.priceValue}>R$ {property.pricePerNight}</span>
+            <span className={styles.pricePeriod}> /noite</span>
+          </div>
+
+          <div className={styles.reservationForm}>
+            <div className={styles.dateInputs}>
+
               <div className={styles.inputGroup}>
-                <label htmlFor="guests">Hóspedes</label>
-                <select id="guests" className={styles.input}>
-                  {Array.from({ length: property.maxGuests }, (_, i) => (
-                    <option key={i + 1} value={i + 1}>{i + 1} hóspede{i + 1 !== 1 ? 's' : ''}</option>
-                  ))}
-                </select>
+                <label htmlFor="checkin">Check-in</label>
+                <input
+                  type="date"
+                  id="checkin"
+                  className={styles.input}
+                  value={reservationData.checkIn}
+                  onChange={(e) => handleChange("checkIn", e.target.value)}
+                />
               </div>
+
+              <div className={styles.inputGroup}>
+                <label htmlFor="checkout">Check-out</label>
+                <input
+                  type="date"
+                  id="checkout"
+                  className={styles.input}
+                  value={reservationData.checkOut}
+                  onChange={(e) => handleChange("checkOut", e.target.value)}
+                />
+              </div>
+            </div>
+
+            <div className={styles.inputGroup}>
+              <label htmlFor="guests">Hóspedes</label>
+              <select
+                id="guests"
+                className={styles.input}
+                value={reservationData.guests}
+                onChange={(e) => handleChange("guests", Number(e.target.value))}
+              >
+                {Array.from({ length: property.maxGuests }, (_, i) => (
+                  <option key={i + 1} value={i + 1}>
+                    {i + 1} hóspede{i + 1 !== 1 ? "s" : ""}
+                  </option>
+                ))}
+              </select>
+            </div>
               
-              <button className={styles.reserveBtn} onClick={handleReservation}>
-                Reservar Agora
-              </button>
+            <div className={styles.inputGroup}>
+              <label htmlFor="customerName">Nome</label>
+              <input
+                type="text"
+                id="customerName"
+                className={styles.input}
+                value={reservationData.customerName}
+                onChange={(e) => handleChange("customerName", e.target.value)}
+              />
+            </div>
+              
+            <div className={styles.inputGroup}>
+              <label htmlFor="customerEmail">Email</label>
+              <input
+                type="email"
+                id="customerEmail"
+                className={styles.input}
+                value={reservationData.customerEmail}
+                onChange={(e) => handleChange("customerEmail", e.target.value)}
+              />
+            </div>
+
+            <Button className={styles.reserveBtn} onClick={onSubmitReservation}>
+              Reservar Agora
+            </Button>
             </div>
             
             <div className={styles.pricingSummary}>
               <div className={styles.pricingLine}>
                 <span>R$ {property.pricePerNight} x 5 noites</span>
+                {/*Simular o calculo de mais noites */}
                 <span>R$ {(property.pricePerNight * 5).toFixed(2)}</span>
-              </div>
-              <div className={styles.pricingLine}>
-                <span>Taxa de limpeza</span>
-                <span>R$ 120,00</span>
-              </div>
-              <div className={styles.pricingLine}>
-                <span>Taxa de serviço</span>
-                <span>R$ 85,00</span>
               </div>
               <div className={styles.pricingTotal}>
                 <span>Total</span>
-                <span>R$ {(property.pricePerNight * 5 + 120 + 85).toFixed(2)}</span>
+                <span>R$ {(property.pricePerNight * 5).toFixed(2)}</span>
               </div>
             </div>
           </div>
@@ -291,8 +399,8 @@ export default function PropertyPageTemplate({ property }: PropertyPageTemplateP
               Enviamos os detalhes da sua reserva para o seu email.
             </p>
             <div className={styles.modalActions}>
-              <button className={styles.modalButton} onClick={closeModal}>Ver Detalhes</button>
-              <button className={styles.modalButtonSecondary} onClick={closeModal}>Fechar</button>
+              
+              <Button onClick={closeModal} variant='secondary'> Fechar </Button>
             </div>
           </div>
         </div>

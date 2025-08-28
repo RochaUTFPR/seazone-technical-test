@@ -11,3 +11,8 @@ export const getProperty = async (id: number): Promise<Property> => {
   const response = await api.get<Property>(`${ApiRoutes.PROPERTIES}/${id}`);
   return response.data;
 };
+
+export const getPropertiesQuery = async (query: string): Promise<Property[]> => {
+  const response = await api.get<Property[]>(`${ApiRoutes.PROPERTIES}?${query}`);
+  return response.data;
+};

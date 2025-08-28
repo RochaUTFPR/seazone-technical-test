@@ -72,7 +72,8 @@ export default function PropertyCard({ property }: { property: Property }) {
                 className={`${styles.carouselImage} ${
                   loadedImages[index] ? styles.visible : styles.hidden
                 }`}
-                onLoadingComplete={() => handleImageLoad(index)}
+                sizes="(max-width: 768px) 100vw, 50vw"
+                onLoad={() => handleImageLoad(index)}
               />
             </div>
           ))}
